@@ -1,14 +1,3 @@
-"""
-Based on django.contrib.sitemaps.views. 
-
-Extras --
-
-- Streaming sitemaps response (provided your middlewares don't interfere)
-- Allows access to "request" from sitemap object if using RequestSitemap
-- Optionally gets current_site from request object's
-  settings.FASTSITEMAPS_SITE_ATTR attribute (default 'site', ie request.site)
-
-"""
 from django.core import urlresolvers
 from django.core.paginator import EmptyPage, PageNotAnInteger
 from django.http import Http404, HttpResponse
