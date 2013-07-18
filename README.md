@@ -1,12 +1,12 @@
-##Fast, streaming sitemaps for Django
+###Fast, streaming sitemaps for Django
 
-This is a drop-in replacement for django.contrib.sitemaps.
+Drop-in replacement for django.contrib.sitemaps that gives you fast, streaming sitemaps that consume minimal memory (O^1 instead of O^n) and minimal server response time on huge data sets.
 
-Simply update your url patterns to use 'fastsitemaps' instead of 'django.contrib.sitemaps'; and whalla, you get fast, streaming sitemaps that consume bugger all memory even on huge data sets.
+If you've got sitemaps with millions of urls, this is your friend.
 
-It's not necessary, but you might also choose to add 'fastsitemaps' to your INSTALLED_APPS just to remind and inform yourself and your buddies that you're using it.
+####Usage
 
-####Example
+Simply update your url patterns to use 'fastsitemaps' instead of 'django.contrib.sitemaps'
 
 Instead of something like this --
 
@@ -17,6 +17,8 @@ Try this --
 
 	url(r'^sitemap\.xml$', 'fastsitemaps.views.index', {'sitemaps': sitemap_dict}),
     url(r'^sitemap-(?P<section>.+)\.xml$', 'fastsitemaps.views.sitemap', {'sitemaps': sitemap_dict}),
+
+It's not necessary, but you might also choose to add 'fastsitemaps' to your INSTALLED_APPS just to remind and inform yourself and your buddies that you're using it.
 
 ####Varying sitemaps by request/site
 
@@ -33,3 +35,6 @@ You can also set settings.FASTSITEMAPS_SITE_ATTR to the name of a property on yo
   (See settings.FASTSITEMAPS_SITE_ATTR attribute- default 'site', ie request.site)
   This can be useful if you are running multiple "sites" in one app instance.
 
+####Future
+
+It'd be nice to include a simple on/off setting that causes your sitemaps to be served from disk; and a celery task and management command to trigger the pre-rendering to disk.
