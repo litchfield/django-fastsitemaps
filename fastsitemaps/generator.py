@@ -21,6 +21,8 @@ def sitemap_generator(request, maps, page, current_site):
                 site = site(request=request)
             else:
                 site = site()
+        elif hasattr(site, 'request'):
+            site.request = request
         for url in site.get_urls(page=page, site=current_site):
             xml.startElement('url', {})
             xml.addQuickElement('loc', url['location'])
