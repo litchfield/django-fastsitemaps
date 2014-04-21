@@ -1,12 +1,7 @@
-try:
-    from cStringIO import StringIO
-except ImportError:
-    from StringIO import StringIO
-from django.http import HttpResponse
+from six import StringIO
 from django.utils.xmlutils import SimplerXMLGenerator
-from django.utils.encoding import smart_unicode
 from django.conf import settings
-from sitemaps import RequestSitemap
+from fastsitemaps.sitemaps import RequestSitemap
 
 def sitemap_generator(request, maps, page, current_site):
     output = StringIO()
