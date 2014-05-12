@@ -1,2 +1,2 @@
 from django.contrib.sitemaps import *
-from sitemaps import RequestSitemap
+from fastsitemaps.sitemaps import RequestSitemap
