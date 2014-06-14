@@ -30,7 +30,7 @@ def index(request, sitemaps, template_name='sitemap_index.xml',
             for page in range(2, pages+1):
                 sites.append('%s://%s%s?p=%s' % (protocol, current_site.domain, sitemap_url, page))
     return TemplateResponse(request, template_name, {'sitemaps': sites}, 
-                            mimetype=mimetype)
+                            content_type=mimetype)
 
 def sitemap(request, sitemaps, section=None):
     maps, urls = [], []
@@ -43,5 +43,5 @@ def sitemap(request, sitemaps, section=None):
     page = request.GET.get("p", 1)
     current_site = getattr(request, SITE_ATTR, get_current_site(request))
     return HttpResponse(sitemap_generator(request, maps, page, current_site), 
-                        mimetype='application/xml')
+                        content_type='application/xml')
     
