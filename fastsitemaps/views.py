@@ -2,7 +2,10 @@ from django.core import urlresolvers
 from django.core.paginator import EmptyPage, PageNotAnInteger
 from django.http import Http404, HttpResponse
 from django.template.response import TemplateResponse
-from django.contrib.sites.models import get_current_site
+try:
+    from django.contrib.sites.shortcuts import get_current_site
+except ImportError:  # < Django 1.7
+    from django.contrib.sites.models import get_current_site
 from django.conf import settings
 from fastsitemaps.generator import sitemap_generator
 from fastsitemaps.sitemaps import RequestSitemap
