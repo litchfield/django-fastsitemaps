@@ -5,6 +5,7 @@ from fastsitemaps.sitemaps import RequestSitemap
 
 def sitemap_generator(request, maps, page, current_site):
     output = StringIO()
+    protocol = request.is_secure() and 'https' or 'http'
     xml = SimplerXMLGenerator(output, settings.DEFAULT_CHARSET)
     xml.startDocument()
     xml.startElement('urlset', {'xmlns':'http://www.sitemaps.org/schemas/sitemap/0.9'})
@@ -18,7 +19,7 @@ def sitemap_generator(request, maps, page, current_site):
                 site = site()
         elif hasattr(site, 'request'):
             site.request = request
-        for url in site.get_urls(page=page, site=current_site):
+        for url in site.get_urls(page=page, site=current_site, protocol=protocol):
             xml.startElement('url', {})
             xml.addQuickElement('loc', url['location'])
             try:
