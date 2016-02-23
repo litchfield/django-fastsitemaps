@@ -6,7 +6,10 @@ If you've got sitemaps with millions of urls, this is your friend.
 
 ####Usage
 
-Simply update your url patterns to use 'fastsitemaps' instead of 'django.contrib.sitemaps'
+1. pip install django-fastsitemaps
+2. Update your url patterns to use 'fastsitemaps' instead of 'django.contrib.sitemaps'
+
+####Example
 
 Instead of something like this --
 
