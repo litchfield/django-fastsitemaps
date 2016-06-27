@@ -1,4 +1,6 @@
 *.log
 *.pot
 *.pyc
+dist
 local_settings.py
+MANIFEST
