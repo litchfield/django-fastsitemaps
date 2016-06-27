@@ -1,13 +1,19 @@
+from django.conf import settings
 from django.core import urlresolvers
 from django.core.paginator import EmptyPage, PageNotAnInteger
 from django.http import Http404, HttpResponse
 from django.template.response import TemplateResponse
-from django.contrib.sites.shortcuts import get_current_site
-from django.conf import settings
+try:
+    from django.contrib.sites.shortcuts import get_current_site
+except ImportError:  # < Django 1.7
+    from django.contrib.sites.models import get_current_site
+
 from fastsitemaps.generator import sitemap_generator
 from fastsitemaps.sitemaps import RequestSitemap
 
+
 SITE_ATTR = getattr(settings, 'FASTSITEMAPS_SITE_ATTR', 'site')
+
 
 def index(request, sitemaps, template_name='sitemap_index.xml', 
           mimetype='application/xml'):
@@ -30,7 +36,8 @@ def index(request, sitemaps, template_name='sitemap_index.xml',
             for page in range(2, pages+1):
                 sites.append('%s://%s%s?p=%s' % (protocol, current_site.domain, sitemap_url, page))
     return TemplateResponse(request, template_name, {'sitemaps': sites}, 
-                            mimetype=mimetype)
+                            content_type=mimetype)
+
 
 def sitemap(request, sitemaps, section=None):
     maps, urls = [], []
@@ -43,5 +50,5 @@ def sitemap(request, sitemaps, section=None):
     page = request.GET.get("p", 1)
     current_site = getattr(request, SITE_ATTR, get_current_site(request))
     return HttpResponse(sitemap_generator(request, maps, page, current_site), 
-                        mimetype='application/xml')
+                        content_type='application/xml')
     
