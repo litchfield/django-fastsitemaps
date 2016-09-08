@@ -1,4 +1,6 @@
 from six import StringIO
+from django.core.paginator import InvalidPage
+from django.http import Http404
 from django.utils.xmlutils import SimplerXMLGenerator
 from django.conf import settings
 from fastsitemaps.sitemaps import RequestSitemap
@@ -19,7 +21,13 @@ def sitemap_generator(request, maps, page, current_site):
                 site = site()
         elif hasattr(site, 'request'):
             site.request = request
-        for url in site.get_urls(page=page, site=current_site, protocol=protocol):
+
+        try:
+            urls = site.get_urls(page=page, site=current_site, protocol=protocol)
+        except InvalidPage:
+            raise Http404('Page not found')
+
+        for url in urls:
             xml.startElement('url', {})
             xml.addQuickElement('loc', url['location'])
             try:
