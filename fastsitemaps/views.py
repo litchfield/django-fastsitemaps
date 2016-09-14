@@ -19,7 +19,7 @@ def index(request, sitemaps, template_name='sitemap_index.xml',
           mimetype='application/xml'):
     current_site = getattr(request, SITE_ATTR, get_current_site(request))
     sites = []
-    protocol = request.is_secure() and 'https' or 'http'
+    protocol = 'https' if request.is_secure() else 'http'
     for section, site in sitemaps.items():
         site.request = request
         if callable(site):
