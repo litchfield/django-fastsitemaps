@@ -13,7 +13,7 @@ class RequestSitemap(Sitemap):
             return attr(obj)
         return attr
 
-    def get_urls(self, page=1, site=None):
+    def get_urls(self, page=1, site=None, protocol=None):
         "Returns a generator instead of a list, also prevents http: doubling up"
         if site is None:
             if Site._meta.installed:
