@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.core import urlresolvers
 from django.core.paginator import EmptyPage, PageNotAnInteger
-from django.http import Http404, HttpResponse
+from django.http import Http404, StreamingHttpResponse
 from django.template.response import TemplateResponse
 try:
     from django.contrib.sites.shortcuts import get_current_site
@@ -49,6 +49,6 @@ def sitemap(request, sitemaps, section=None):
         maps = sitemaps.values()
     page = request.GET.get("p", 1)
     current_site = getattr(request, SITE_ATTR, get_current_site(request))
-    return HttpResponse(sitemap_generator(request, maps, page, current_site), 
-                        content_type='application/xml')
-    
+    return StreamingHttpResponse(
+        sitemap_generator(request, maps, page, current_site),
+        content_type='application/xml')
