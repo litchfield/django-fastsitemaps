@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.core import urlresolvers
+from django.urls import reverse
 from django.core.paginator import EmptyPage, PageNotAnInteger
 from django.http import Http404, HttpResponse
 from django.template.response import TemplateResponse
@@ -29,7 +29,7 @@ def index(request, sitemaps, template_name='sitemap_index.xml',
                 pages = site().paginator.num_pages
         else:
             pages = site.paginator.num_pages
-        sitemap_url = urlresolvers.reverse('fastsitemaps.views.sitemap', 
+        sitemap_url = reverse('fastsitemaps.views.sitemap', 
                                            kwargs={'section': section})
         sites.append('%s://%s%s' % (protocol, current_site.domain, sitemap_url))
         if pages > 1:
